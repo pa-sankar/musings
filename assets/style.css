@@ -209,10 +209,31 @@ hr {
   margin-bottom: 0.28rem;
 }
 
-.article-card--external a:hover {
-  border-left-color: #8b6f47;
-  background-color: #fdf8f2;
+.article-card--external a {
+  position: relative;
+  background-color: #fdf5eb;          /* warm amber tint — always visible */
+  border-left-color: rgba(139, 111, 71, 0.35);  /* subtle amber border at rest */
 }
+
+/* large external-link icon, top-right corner */
+.article-card--external a::after {
+  content: '↗';
+  position: absolute;
+  top: 0.55rem;
+  right: 0.8rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #8b6f47;
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
+
+.article-card--external a:hover {
+  background-color: #faebd5;
+  border-left-color: #8b6f47;
+}
+
+.article-card--external a:hover::after { opacity: 1; }
 
 .article-card--external a:hover .card-title { color: #8b6f47; }
 
