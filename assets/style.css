@@ -52,91 +52,200 @@ hr {
 }
 
 /* ========================================================
-   Homepage
+   Homepage — Two-column layout
    ======================================================== */
 
-.site-header {
-  padding: 4rem 0 3rem;
-  margin-bottom: 3rem;
-  border-bottom: 1px solid #d8cfc6;
+.container--home {
+  max-width: 1120px;
 }
 
+/* --- Two-column shell ----------------------------------- */
+.home-layout {
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* --- Shared panel label --------------------------------- */
+.panel-label {
+  font-size: 0.72rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #8b6f47;
+  margin: 0 0 1.6rem;
+}
+
+/* --- Left: about panel ---------------------------------- */
+.about-panel {
+  flex: 0 0 40%;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 3.5rem 3rem 3rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  border-right: 1px solid #d8cfc6;
+}
+
+.site-id { flex-shrink: 0; }
+
 .site-title {
-  font-size: 2.6rem;
-  margin: 0 0 0.6rem;
+  font-size: 2.2rem;
+  margin: 0 0 0.5rem;
   letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 .site-tagline {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-style: italic;
   color: #6b6560;
   margin: 0;
 }
 
-.home-section { margin-bottom: 3.5rem; }
+.about-section { flex: 1; }
 
-.home-section-label {
-  font-size: 0.78rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #8b6f47;
-  margin: 0 0 1.4rem;
+.about-section p {
+  font-size: 0.975rem;
+  color: #3d3a36;
+  line-height: 1.75;
 }
 
-.about-text { max-width: 62ch; }
-.about-text p { font-size: 1rem; }
-
-/* --- Article list --------------------------------------- */
-.article-list { list-style: none; margin: 0; padding: 0; }
-
-.article-list-item {
-  padding: 1.5rem 0;
-  border-bottom: 1px solid #e5e0da;
-}
-.article-list-item:first-child { border-top: 1px solid #e5e0da; }
-
-.article-list-item a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.article-list-item a:hover .article-list-title {
-  color: #5b6e3a;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.article-list-title {
-  font-size: 1.2rem;
-  margin: 0 0 0.3rem;
-  color: #2d2a26;
-  font-style: normal;
-  line-height: 1.35;
-}
-
-.article-list-subtitle {
-  font-size: 0.9rem;
-  font-style: italic;
-  color: #6b6560;
-  margin: 0 0 0.5rem;
-}
-
-.article-list-meta {
+/* --- Site footer (shared — homepage left col & article) - */
+.site-footer {
+  padding: 1.5rem 0 0;
+  border-top: 1px solid #d8cfc6;
   font-size: 0.82rem;
   color: #8b8480;
-  margin: 0;
+  font-style: italic;
+  flex-shrink: 0;
 }
 
-/* --- Site footer ---------------------------------------- */
-.site-footer {
-  margin-top: 4rem;
-  padding: 2.5rem 0;
-  border-top: 1px solid #d8cfc6;
-  font-size: 0.85rem;
-  color: #8b8480;
+/* --- Right: articles panel ------------------------------ */
+.articles-panel {
+  flex: 1;
+  min-width: 0;
+  padding: 3.5rem 0 3rem 3.5rem;
+}
+
+/* --- Slider shell --------------------------------------- */
+.slider-wrapper { position: relative; }
+
+.slider-viewport {
+  overflow: hidden;
+  /* height controlled by JS; fallback shows all cards */
+}
+
+.slider-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* --- Individual article card ---------------------------- */
+.article-card {
+  height: 116px;          /* JS reads this via offsetHeight */
+  box-sizing: border-box;
+  border-bottom: 1px solid #e5e0da;
+  position: relative;
+}
+
+.article-card:first-child { border-top: 1px solid #e5e0da; }
+
+.article-card a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 0 1.25rem 0 1rem;
+  text-decoration: none;
+  color: inherit;
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.article-card a:hover {
+  border-left-color: #7da86a;
+  background-color: #f7f4ef;
+}
+
+.card-date {
+  font-size: 0.7rem;
+  color: #9b9490;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.28rem;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: normal;
+  line-height: 1.32;
+  margin: 0 0 0.28rem;
+  color: #2d2a26;
+  transition: color 0.2s ease;
+}
+
+.article-card a:hover .card-title { color: #5b6e3a; }
+
+.card-sub {
+  font-size: 0.8rem;
   font-style: italic;
+  color: #6b6560;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Slider navigation ---------------------------------- */
+.slider-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding-top: 1rem;
+}
+
+.slider-counter {
+  font-size: 0.78rem;
+  color: #9b9490;
+  margin-right: auto;
+  font-style: italic;
+}
+
+.slider-btn {
+  background: none;
+  border: 1px solid #d0c9c1;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b6560;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.slider-btn:hover:not(:disabled) {
+  border-color: #8b6f47;
+  color: #8b6f47;
+  background-color: #fdf8f2;
+}
+
+.slider-btn:disabled {
+  opacity: 0.28;
+  cursor: default;
 }
 
 /* ========================================================
@@ -329,10 +438,50 @@ hr {
 /* ========================================================
    Responsive
    ======================================================== */
+
+/* --- Tablet: collapse to single column at 768px --------- */
+@media (max-width: 768px) {
+  .home-layout { flex-direction: column; min-height: auto; }
+
+  .about-panel {
+    position: static;
+    height: auto;
+    flex: none;
+    width: 100%;
+    padding: 2.5rem 0 2rem;
+    border-right: none;
+    border-bottom: 1px solid #d8cfc6;
+    gap: 1.5rem;
+  }
+
+  .articles-panel {
+    padding: 2rem 0 2.5rem;
+  }
+
+  /* On mobile, remove viewport clipping so all articles show */
+  .slider-viewport {
+    height: auto !important;
+    overflow: visible;
+  }
+
+  .slider-track {
+    transform: none !important;
+    transition: none;
+  }
+
+  .slider-nav { display: none; }
+
+  .article-card { height: auto; min-height: 100px; }
+  .article-card a { padding: 1rem 0.5rem; }
+
+  .site-footer { margin-top: 1rem; }
+}
+
+/* --- Mobile small ---------------------------------------- */
 @media (max-width: 600px) {
   body { font-size: 16px; }
   .container { padding: 0 1.1rem; }
-  .site-title { font-size: 2rem; }
+  .site-title { font-size: 1.85rem; }
   .article-title { font-size: 1.75rem; }
   .section-roman { font-size: 1.2rem; min-width: 2rem; }
   .section-title { font-size: 1rem; }

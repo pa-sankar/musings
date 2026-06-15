@@ -24,42 +24,62 @@
   <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container container--home">
+    <div class="home-layout">
 
-    <header class="site-header">
-      <h1 class="site-title">Musings of an Indian</h1>
-      <!-- TAGLINE: to be decided by Paa Sankar — placeholder below -->
-      <p class="site-tagline">On farming, living well, and the long view.</p>
-    </header>
+      <!-- ── Left column: identity + about ── -->
+      <aside class="about-panel">
 
-    <main>
-      <section class="home-section">
-        <h2 class="home-section-label">About</h2>
-        <div class="about-text">
+        <header class="site-id">
+          <h1 class="site-title">Musings of an Indian</h1>
+          <!-- TAGLINE: to be decided by Paa Sankar — placeholder below -->
+          <p class="site-tagline">On farming, living well, and the long view.</p>
+        </header>
+
+        <section class="about-section">
+          <h2 class="panel-label">About the Author</h2>
           <p>Paa Sankar writes about the ideas and practices that occupy his thinking: organic farming and the science of healthy soil, independent living that carries its own weight without extracting from others, leveraging AI as a tool for genuinely meaningful outcomes, educating the next generation to think clearly and act wisely, and studying history — not as a museum of the past but as a working document for today's problems.</p>
           <p>These are not separate interests. They are the same inquiry approached from different angles.</p>
+        </section>
+
+        <footer class="site-footer">
+          <p>© Paa Sankar <span id="year"></span></p>
+        </footer>
+
+      </aside>
+
+      <!-- ── Right column: articles slider ── -->
+      <section class="articles-panel">
+        <h2 class="panel-label">Articles</h2>
+
+        <div class="slider-wrapper">
+          <div class="slider-viewport" id="sliderViewport">
+            <ul class="slider-track" id="sliderTrack">
+
+              <!-- Add new articles here at the TOP (newest first) -->
+
+              <li class="article-card">
+                <a href="./history-repeats/">
+                  <span class="card-date">June 2026</span>
+                  <h3 class="card-title">History Repeats in the Future — Or Will It?</h3>
+                  <p class="card-sub">An historical village reimagined in the near future &nbsp;·&nbsp; 16 min read</p>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+          <div class="slider-nav" id="sliderNav">
+            <span class="slider-counter" id="sliderCounter"></span>
+            <button class="slider-btn slider-btn--prev" id="btnPrev" disabled aria-label="Newer articles">↑</button>
+            <button class="slider-btn slider-btn--next" id="btnNext" aria-label="Older articles">↓</button>
+          </div>
         </div>
       </section>
 
-      <section class="home-section">
-        <h2 class="home-section-label">Articles</h2>
-        <ul class="article-list">
-          <li class="article-list-item">
-            <a href="./history-repeats/">
-              <h3 class="article-list-title">History Repeats in the Future — Or Will It?</h3>
-              <p class="article-list-subtitle">An historical village reimagined in the near future</p>
-              <p class="article-list-meta">Paa Sankar &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; 16 min read</p>
-            </a>
-          </li>
-        </ul>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <p>© Paa Sankar <span id="year"></span></p>
-    </footer>
-
+    </div>
   </div>
+
   <script src="./assets/script.js"></script>
 </body>
 </html>
