@@ -69,4 +69,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   setHeight();
   slideTo(0);
+
+  /* ── External link click tracking ─────────────────────── */
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[data-track="external"]');
+    if (!link || typeof gtag !== 'function') return;
+    gtag('event', 'external_link_click', {
+      link_url:  link.getAttribute('href'),
+      link_text: link.getAttribute('data-title')
+    });
+  });
 });

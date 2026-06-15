@@ -190,9 +190,31 @@ hr {
   margin: 0 0 0.28rem;
   color: #2d2a26;
   transition: color 0.2s ease;
+  /* clamp to 2 lines so long titles never break card height */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .article-card a:hover .card-title { color: #5b6e3a; }
+
+/* --- External article cards ----------------------------- */
+.card-source {
+  font-size: 0.7rem;
+  color: #8b6f47;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.28rem;
+}
+
+.article-card--external a:hover {
+  border-left-color: #8b6f47;
+  background-color: #fdf8f2;
+}
+
+.article-card--external a:hover .card-title { color: #8b6f47; }
 
 .card-sub {
   font-size: 0.8rem;
