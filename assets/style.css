@@ -202,7 +202,6 @@ hr {
 /* --- External article cards ----------------------------- */
 .card-source {
   font-size: 0.7rem;
-  color: #8b6f47;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   display: block;
@@ -211,31 +210,35 @@ hr {
 
 .article-card--external a {
   position: relative;
-  background-color: #fdf5eb;          /* warm amber tint — always visible */
-  border-left-color: rgba(139, 111, 71, 0.35);  /* subtle amber border at rest */
+  background-color: #2d2a26;   /* dark — flips the visual vs internal cards */
+  border-left-color: #c09a6a;  /* amber accent, readable on dark */
 }
 
-/* large external-link icon, top-right corner */
+.article-card--external a .card-source { color: #c09a6a; }
+.article-card--external a .card-title  { color: #f5efe6; }
+.article-card--external a .card-sub    { color: #9d9088; }
+
+/* large ↗ icon pinned top-right */
 .article-card--external a::after {
   content: '↗';
   position: absolute;
   top: 0.55rem;
-  right: 0.8rem;
-  font-size: 1.25rem;
+  right: 0.85rem;
+  font-size: 1.4rem;
   line-height: 1;
-  color: #8b6f47;
-  opacity: 0.45;
-  transition: opacity 0.2s ease;
+  color: #c09a6a;
+  opacity: 0.65;
+  transition: opacity 0.2s ease, color 0.2s ease;
 }
 
 .article-card--external a:hover {
-  background-color: #faebd5;
-  border-left-color: #8b6f47;
+  background-color: #3d3a36;
+  border-left-color: #d4b488;
 }
 
-.article-card--external a:hover::after { opacity: 1; }
-
-.article-card--external a:hover .card-title { color: #8b6f47; }
+.article-card--external a:hover .card-title  { color: #ffffff; }
+.article-card--external a:hover .card-source { color: #d4b488; }
+.article-card--external a:hover::after       { opacity: 1; color: #d4b488; }
 
 .card-sub {
   font-size: 0.8rem;
