@@ -440,6 +440,29 @@ hr {
   margin-top: 2rem;
 }
 
+.article-examples {
+  list-style: none;
+  margin: 1.75rem 0;
+  padding: 0;
+}
+
+.article-examples li {
+  padding: 0.85rem 0 0.85rem 1.75rem;
+  border-bottom: 1px solid #e5e0da;
+  position: relative;
+  line-height: 1.7;
+}
+
+.article-examples li:first-child { border-top: 1px solid #e5e0da; }
+
+.article-examples li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #c09a6a;
+  font-style: normal;
+}
+
 .article-sign-off {
   margin-top: 3rem;
   padding-top: 1.5rem;
