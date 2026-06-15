@@ -414,6 +414,42 @@ hr {
   line-height: 1.68;
 }
 
+/* --- Op-ed / essay article styles ----------------------- */
+.article-standfirst {
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #2d2a26;
+  letter-spacing: 0.01em;
+}
+
+.article-pullquote {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #5b6e3a;
+  border-top: 1px solid #d8cfc6;
+  border-bottom: 1px solid #d8cfc6;
+  padding: 1.25rem 0;
+  margin: 2.5rem 0;
+}
+
+.article-closing-line {
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: bold;
+  color: #2d2a26;
+  margin-top: 2rem;
+}
+
+.article-sign-off {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #d8cfc6;
+  font-size: 0.9rem;
+  color: #6b6560;
+}
+
+.article-sign-off p { margin-bottom: 0.4em; }
+
 /* --- Uttiramerur aside ---------------------------------- */
 .aside-note {
   margin-top: 4rem;
