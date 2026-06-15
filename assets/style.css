@@ -195,6 +195,22 @@ hr {
   margin: 0 0.4rem;
 }
 
+/* --- Hero image ----------------------------------------- */
+.article-hero {
+  margin: 0 0 3rem;
+  padding: 0;
+  border-radius: 3px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.article-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 3px;
+}
+
 .article-body { max-width: 68ch; }
 
 /* --- Article sections ----------------------------------- */
