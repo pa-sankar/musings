@@ -491,6 +491,13 @@ hr {
 }
 .subsection.future .subsection-label { color: #4a7a40; }
 
+/* reality subsection — neutral blue-grey, used in analysis articles */
+.subsection.reality {
+  background-color: #eef3f8;
+  border-left: 3px solid #7a9abf;
+}
+.subsection.reality .subsection-label { color: #3a5a80; }
+
 /* --- Closing section ------------------------------------ */
 .closing-section {
   margin-top: 4.5rem;
@@ -586,7 +593,7 @@ hr {
 
 /* --- Uttiramerur aside ---------------------------------- */
 .aside-note {
-  margin-top: 4rem;
+  margin: 2rem 0;
   padding: 1.5rem 1.75rem;
   background-color: #f4efe9;
   border: 1px solid #d8cfc6;
@@ -604,6 +611,62 @@ hr {
   display: block;
   margin-bottom: 0.8rem;
 }
+
+/* --- Sources / references ------------------------------- */
+.article-sources {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #d8cfc6;
+}
+
+.article-sources-label {
+  font-size: 0.72rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #8b6f47;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.sources-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: sources-counter;
+}
+
+.sources-list li {
+  counter-increment: sources-counter;
+  font-size: 0.875rem;
+  color: #4a4540;
+  line-height: 1.65;
+  padding: 0.65rem 0 0.65rem 2rem;
+  border-bottom: 1px solid #e5e0da;
+  position: relative;
+}
+
+.sources-list li:first-child { border-top: 1px solid #e5e0da; }
+
+.sources-list li::before {
+  content: counter(sources-counter);
+  position: absolute;
+  left: 0;
+  color: #c09a6a;
+  font-size: 0.75rem;
+  font-style: italic;
+  top: 0.75rem;
+}
+
+.source-ref {
+  font-size: 0.65rem;
+  text-decoration: none;
+  color: #c09a6a;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.source-ref:hover { color: #8b6035; text-decoration: underline; }
 
 /* ========================================================
    Responsive
