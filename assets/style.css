@@ -612,6 +612,47 @@ hr {
   margin-bottom: 0.8rem;
 }
 
+/* --- Essay sub-headings --------------------------------- */
+.article-body > h2 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 2.5rem 0 0.6rem;
+  color: #2d2a26;
+}
+
+/* --- Data tables ---------------------------------------- */
+.article-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 1.75rem 0;
+  color: #2d2a26;
+}
+
+.article-table th,
+.article-table td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e0da;
+  vertical-align: top;
+}
+
+.article-table thead th {
+  font-size: 0.78rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8b6f47;
+  border-bottom: 2px solid #d8cfc6;
+  background-color: #faf6f1;
+}
+
+@media (max-width: 600px) {
+  .article-table { font-size: 0.8rem; }
+  .article-table th,
+  .article-table td { padding: 0.5rem 0.5rem; }
+}
+
 /* --- Sources / references ------------------------------- */
 .article-sources {
   margin-top: 3rem;
