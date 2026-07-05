@@ -1,5 +1,6 @@
 Screenshots/
 *.png
 *.md
+!CLAUDE.md
 email-notifier/config.json
 Musings Blog Subscribers.csv
