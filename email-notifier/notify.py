@@ -53,7 +53,7 @@ def build_message(cfg, recipient, article_title, article_url, article_subtitle):
     sender_name  = cfg["sender_name"]
     blog_name    = cfg["blog_name"]
     blog_url     = cfg["blog_url"]
-    first_name   = recipient["name"].split()[0] if recipient["name"] else "Reader"
+    greeting_name = recipient["name"] if recipient["name"] else "Reader"
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = f"New on {blog_name}: {article_title}"
@@ -67,7 +67,7 @@ def build_message(cfg, recipient, article_title, article_url, article_subtitle):
         if article_subtitle else ""
     )
 
-    plain = f"""Hi {first_name},
+    plain = f"""Hi {greeting_name},
 
 A new article has just been published on {blog_name}.
 
@@ -93,7 +93,7 @@ To unsubscribe, reply to this email.
     </p>
 
     <p style="font-size:1rem;color:#4a4540;margin:0 0 1.5rem 0;line-height:1.7;">
-      Hi {first_name},
+      Hi {greeting_name},
     </p>
 
     <p style="font-size:1rem;color:#4a4540;margin:0 0 2rem 0;line-height:1.7;">
