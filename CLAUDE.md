@@ -115,6 +115,14 @@ python email-notifier/notify.py --dry-run --title "..." --url "..."
 python email-notifier/notify.py --title "..." --url "https://..." --subtitle "..."
 ```
 
+**Windows console encoding:** the default console codepage (cp1252) can't print non-ASCII characters (arrows, em dashes, smart quotes). Run Python scripts with `PYTHONIOENCODING=utf-8` set, e.g.:
+
+```bash
+PYTHONIOENCODING=utf-8 python email-notifier/notify.py --title "..." --url "..."
+```
+
+Without it, a crash mid-loop (e.g. after the first `sendmail()` succeeds but before its `print()`) can silently skip the remaining recipients — always verify send counts against subscriber count.
+
 ---
 
 ## Pending items
