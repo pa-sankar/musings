@@ -168,10 +168,10 @@ def main():
             try:
                 msg = build_message(cfg, sub, args.title, args.url, args.subtitle)
                 server.sendmail(cfg["sender_email"], sub["email"], msg.as_string())
-                print(f"  Sent  → {sub['name']} <{sub['email']}>")
+                print(f"  Sent  -> {sub['name']} <{sub['email']}>")
                 sent += 1
             except Exception as e:
-                print(f"  FAIL  → {sub['email']}: {e}")
+                print(f"  FAIL  -> {sub['email']}: {e}")
                 failed += 1
 
     print(f"\nDone. {sent} sent, {failed} failed.")
