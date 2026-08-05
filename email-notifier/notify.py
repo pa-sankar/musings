@@ -17,6 +17,10 @@ Usage
   python notify.py --title "Before You Invest a Rupee, Learn the Language" \\
                    --url "https://pa-sankar.github.io/musings/investment-language/" \\
                    --subtitle "A naive investor's notes on tax, inflation, and XIRR"
+
+The hero image ({slug}-Image.jpg) is included automatically, following the
+same convention as the article's og:image. Override with --image <url>, or
+omit entirely with --no-image.
 """
 
 import csv
@@ -48,7 +52,7 @@ def load_subscribers(csv_path):
     return subscribers
 
 
-def build_message(cfg, recipient, article_title, article_url, article_subtitle):
+def build_message(cfg, recipient, article_title, article_url, article_subtitle, image_url=None):
     sender_email = cfg["sender_email"]
     sender_name  = cfg["sender_name"]
     blog_name    = cfg["blog_name"]
@@ -59,6 +63,14 @@ def build_message(cfg, recipient, article_title, article_url, article_subtitle):
     msg["Subject"] = f"New on {blog_name}: {article_title}"
     msg["From"]    = f"{sender_name} <{sender_email}>"
     msg["To"]      = recipient["email"]
+
+    image_block_html = (
+        f"<a href='{article_url}' style='display:block;margin:0 0 1.75rem 0;'>"
+        f"<img src='{image_url}' alt='{article_title}' width='560' "
+        f"style='display:block;width:100%;max-width:560px;height:auto;border-radius:3px;'>"
+        f"</a>"
+        if image_url else ""
+    )
 
     subtitle_line_plain = f"{article_subtitle}\n" if article_subtitle else ""
     subtitle_block_html = (
@@ -100,6 +112,8 @@ To unsubscribe, reply to this email.
       A new article has just been published.
     </p>
 
+    {image_block_html}
+
     <div style="border-left:3px solid #c09a6a;padding:0 0 0 1.25rem;margin:0 0 2rem 0;">
       <h1 style="font-size:1.4rem;font-weight:normal;line-height:1.3;color:#2d2a26;margin:0 0 0.6rem 0;">
         {article_title}
@@ -137,8 +151,21 @@ def main():
     parser.add_argument("--title",    required=True,  help="Article title")
     parser.add_argument("--url",      required=True,  help="Full article URL")
     parser.add_argument("--subtitle", default="",     help="Article subtitle (optional)")
+    parser.add_argument("--image",    default=None,
+                         help="Hero image URL for the email. Defaults to the "
+                              "{slug}-Image.jpg convention derived from --url. "
+                              "Pass --no-image to omit the image entirely.")
+    parser.add_argument("--no-image", action="store_true", help="Send without a hero image")
     parser.add_argument("--dry-run",  action="store_true", help="List recipients without sending")
     args = parser.parse_args()
+
+    if args.no_image:
+        image_url = None
+    elif args.image:
+        image_url = args.image
+    else:
+        slug = args.url.rstrip("/").split("/")[-1]
+        image_url = f"{args.url.rstrip('/')}/{slug}-Image.jpg"
 
     cfg = load_config()
     csv_path = REPO_ROOT / cfg["subscribers_csv"]
@@ -153,6 +180,7 @@ def main():
         sys.exit(1)
 
     print(f"Subscribers: {len(subscribers)}")
+    print(f"Hero image: {image_url if image_url else '(none)'}")
 
     if args.dry_run:
         print("Dry run — recipients that would be emailed:")
@@ -166,7 +194,7 @@ def main():
         server.login(cfg["sender_email"], cfg["app_password"])
         for sub in subscribers:
             try:
-                msg = build_message(cfg, sub, args.title, args.url, args.subtitle)
+                msg = build_message(cfg, sub, args.title, args.url, args.subtitle, image_url)
                 server.sendmail(cfg["sender_email"], sub["email"], msg.as_string())
                 print(f"  Sent  -> {sub['name']} <{sub['email']}>")
                 sent += 1

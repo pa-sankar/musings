@@ -108,6 +108,8 @@ Script: `email-notifier/notify.py`
 Config (gitignored): `email-notifier/config.json` — Gmail app password for paa.sankar.author@gmail.com
 Subscribers CSV (gitignored): `Musings Blog Subscribers.csv` — columns: Timestamp, Name, Email, Remarks
 
+The email includes a clickable hero image, auto-derived from `--url` via the `{slug}-Image.jpg` convention (same as `og:image`). Override with `--image <url>`, or drop it with `--no-image` if the article has no hero image yet.
+
 ```bash
 # Dry run (preview recipients):
 python email-notifier/notify.py --dry-run --title "..." --url "..."
