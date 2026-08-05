@@ -97,6 +97,7 @@ Snippet goes in `<head>` of every HTML page:
 | `AIndian` | It Takes an Indian to Understand an AIndian | Listed |
 | `investment-language` | Before You Invest a Rupee, Learn the Language | Listed |
 | `musings-of-an-ai` | What I (the AI) don't understand about you (the humans) | Listed |
+| `ageless-wisdom` | Ageless Wisdom | Listed |
 | `segregation` | Isn't Segregation Illegal? | **Unlisted** — pending pledge form URL + homepage card |
 
 ---
