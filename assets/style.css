@@ -710,6 +710,94 @@ hr {
 .source-ref:hover { color: #8b6035; text-decoration: underline; }
 
 /* ========================================================
+   Series strip + hub page
+   ======================================================== */
+
+.series-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #6b6560;
+  border: 1px solid #e5e0da;
+  background: #f6efe6;
+  border-radius: 3px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.series-strip-label {
+  color: #8b6f47;
+  font-weight: bold;
+}
+
+.series-strip a {
+  color: #5b6e3a;
+  text-decoration: none;
+  border-bottom: 1px solid #7da86a;
+}
+
+.series-strip a:hover { color: #3d4e28; }
+
+.series-strip-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 1rem;
+}
+
+.hub-header {
+  border-bottom: 1px solid #e5e0da;
+  padding: 2.5rem 0 2rem;
+}
+
+.hub-title { font-size: 2rem; font-weight: normal; margin: 0 0 0.6rem; }
+.hub-description { font-size: 1.05rem; color: #6b6560; max-width: 62ch; }
+
+.hub-list {
+  list-style: none;
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.hub-item {
+  display: flex;
+  gap: 1.2rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid #e5e0da;
+}
+
+.hub-item-number {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #c09a6a;
+  min-width: 2rem;
+  flex-shrink: 0;
+}
+
+.hub-item-title { font-size: 1.1rem; margin: 0 0 0.3rem; }
+.hub-item-title a { color: #2d2a26; text-decoration: none; }
+.hub-item-title a:hover { color: #5b6e3a; }
+
+.hub-item-teaser { font-size: 0.92rem; color: #6b6560; margin: 0; }
+
+.hub-item--pending .hub-item-title { color: #9b9490; }
+.hub-item--pending .hub-item-teaser { font-style: italic; }
+
+.hub-item-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #8b6f47;
+  border: 1px solid #d8cfc6;
+  border-radius: 2px;
+  padding: 0.1rem 0.4rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+/* ========================================================
    Responsive
    ======================================================== */
 
@@ -762,4 +850,8 @@ hr {
   .subsection { padding: 1.2rem 1.2rem; }
   .article-meta { flex-direction: column; gap: 0.2rem; }
   .article-meta span + span::before { content: ''; margin: 0; }
+
+  .series-strip { flex-direction: column; align-items: flex-start; }
+  .series-strip-nav { margin-left: 0; }
+  .hub-item { flex-direction: column; gap: 0.3rem; }
 }
