@@ -99,6 +99,7 @@ Snippet goes in `<head>` of every HTML page:
 | `musings-of-an-ai` | What I (the AI) don't understand about you (the humans) | Listed |
 | `ageless-wisdom` | Ageless Wisdom | Listed |
 | `ai-is-killing-the-curious-cat` | AI is killing the curious cat (series part 1 of 5) | Listed |
+| `a-solution-from-the-past-rediscovered` | A solution from the past, rediscovered (series part 2 of 5) | Listed |
 | `segregation` | Isn't Segregation Illegal? | **Unlisted** — pending pledge form URL + homepage card |
 
 ---
@@ -132,4 +133,4 @@ Without it, a crash mid-loop (e.g. after the first `sendmail()` succeeds but bef
 ## Pending items
 
 - `segregation/`: replace `PLEDGE_FORM_LINK_TBD` with actual Google Form URL, then add to homepage slider
-- AI curiosity series (`ai-curiosity-series/` hub): parts 2–5 still work in progress. Swap each "Coming soon" badge in the hub for a real link as each piece is finalized.
+- AI curiosity series (`ai-curiosity-series/` hub): parts 3–5 still work in progress. Swap each "Coming soon" badge in the hub for a real link as each piece is finalized.
