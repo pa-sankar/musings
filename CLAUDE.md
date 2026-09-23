@@ -129,6 +129,19 @@ PYTHONIOENCODING=utf-8 python email-notifier/notify.py --title "..." --url "..."
 
 Without it, a crash mid-loop (e.g. after the first `sendmail()` succeeds but before its `print()`) can silently skip the remaining recipients — always verify send counts against subscriber count.
 
+**New-subscriber welcome email:** `email-notifier/welcome.py` — sends a one-off welcome email to a single subscriber, looked up by `--name` or `--email` in the CSV. Same config/branding as `notify.py`. Optionally feature an article with `--highlight-title` / `--highlight-url` / `--highlight-subtitle` (e.g. point new subscribers at the start of the current series).
+
+```bash
+# Preview:
+PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --name "Jagan" --dry-run
+
+# Send:
+PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --name "Jagan" \
+  --highlight-title "..." --highlight-url "https://..." --highlight-subtitle "..."
+```
+
+Run this whenever a new row appears in `Musings Blog Subscribers.csv`.
+
 ---
 
 ## Pending items
