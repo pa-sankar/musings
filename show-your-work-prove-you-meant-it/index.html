@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="If AI can write the answer, the answer stops proving anything. Grading the method instead of the result turns out to be an old, and surprisingly strong, fix.">
+  <title>Show your work, prove you meant it | Musings of an Indian</title>
+  <link rel="canonical" href="https://pa-sankar.github.io/musings/show-your-work-prove-you-meant-it/">
+  <meta property="og:site_name" content="Musings of an Indian">
+  <meta property="og:title" content="Show your work, prove you meant it">
+  <meta property="og:description" content="A finished answer from a chatbot proves nothing about whether a student learned anything. Grading the road there is a different story.">
+  <meta property="og:url" content="https://pa-sankar.github.io/musings/show-your-work-prove-you-meant-it/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://pa-sankar.github.io/musings/show-your-work-prove-you-meant-it/show-your-work-prove-you-meant-it-Image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A worked-out mathematics proof on a chalkboard, with the final answer circled but every line of working still fully visible above it.">
+  <meta property="article:author" content="Paa Sankar">
+  <meta property="article:published_time" content="2026-09-26">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Show your work, prove you meant it">
+  <meta name="twitter:description" content="The answer is cheap now. The method still isn't. Part 3 of a series on AI and learning.">
+  <meta name="twitter:image" content="https://pa-sankar.github.io/musings/show-your-work-prove-you-meant-it/show-your-work-prove-you-meant-it-Image.jpg">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GT-W6233NMX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GT-W6233NMX');
+  </script>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="container">
+
+    <nav class="article-nav">
+      <a class="back-link" href="../">← Musings of an Indian</a>
+    </nav>
+
+    <div class="series-strip">
+      <span class="series-strip-label">Part 3 of 5</span>
+      <span>— If human nature doesn't change, why would AI?</span>
+      <span class="series-strip-nav">
+        <a href="../ai-curiosity-series/index.html">Series hub</a>
+        <a href="../a-solution-from-the-past-rediscovered/index.html">← Part 2</a>
+      </span>
+    </div>
+
+    <article>
+      <header class="article-header">
+        <h1 class="article-title">Show your work, prove you meant it</h1>
+        <p class="article-subtitle">If human nature doesn't change, why would AI?</p>
+        <div class="article-meta">
+          <span>Paa Sankar</span>
+          <span>September 2026</span>
+          <span>6 min read</span>
+        </div>
+      </header>
+
+      <figure class="article-hero">
+        <img src="./show-your-work-prove-you-meant-it-Image.jpg" alt="A worked-out mathematics proof on a chalkboard, with the final answer circled but every line of working still fully visible above it.">
+      </figure>
+
+      <div class="article-body">
+
+        <p>A teacher gets a homework submission. It's well-written, well-argued, and correct. It was also, quite possibly, written entirely by an AI chatbot in the time it took to make tea. The old test for whether a student learned something was simple: did they produce the right answer? That test has quietly stopped meaning anything. The right answer now costs nothing to produce, and proves nothing about who produced it.</p>
+
+        <p class="article-pullquote">The fix teachers are reaching for, instinctively, is the right one: stop grading the answer, grade the road there.</p>
+
+        <p>Explain your reasoning. Show your work. It turns out this instinct has real teeth to it, more than most people trying it realise. It's already being built, quietly, into how AI systems themselves are trained and tested.</p>
+
+        <h2>The idea, and why it's not just a classroom trick</h2>
+
+        <p>Researchers building AI training pipelines ran into the exact same problem from the other direction. If you only reward an AI system for a correct final answer, you get a system that's very good at producing correct final answers. That tells you nothing about whether its actual reasoning was sound, or just a lucky guess dressed up as logic. The fix is called a process reward model. It grades each step of the reasoning rather than just the destination. That matters because a step in mathematics or code either follows validly from the last one or it doesn't, independent of whether the final number happens to be right.</p>
+
+        <p>This is the same principle math olympiad graders have used for decades: partial credit for a sound method, even when the final answer is wrong. The theory is simple. A coherent derivation is much harder to fake than a memorised number. A student who has only memorised last year's answer key cannot usually improvise a convincing derivation for a differently-numbered version of the same problem. The method is the tell.</p>
+
+        <h2>The stronger version: make them defend it against someone who wasn't told the answer</h2>
+
+        <p>Explaining your work to yourself is a good start. Explaining it to someone else, someone genuinely unfamiliar with the problem, turns out to be considerably stronger. There's real research behind why.</p>
+
+        <p>Teachers preparing to teach something show measurably deeper understanding of the material than students who just study it to be tested on it. That's true even before an audience ever asks a single question. Researchers call this the protégé effect. The mechanism is straightforward. Explaining forces you to reconstruct the material from scratch, rather than just recognising it, and reconstruction is where the gaps in your own understanding become impossible to hide from yourself.</p>
+
+        <p>The version of this we'd instinctively reach for, explain it to a classmate, has an even older name and a stronger form. That's if the classmate is actually allowed to be difficult about it. At King Janaka's court, in one of the oldest Upanishads, that's more or less how a learned assembly tested itself. One scholar after another stood and challenged Yajnavalkya's understanding directly, not politely, harder question after harder question, and real consequences attached to losing. The scholar Gargi Vachaknavi pressed him twice in front of the entire court, until he had to warn her she was pushing past what the format allowed. That's not a classroom being kind to its students.</p>
+
+        <p>Refutation-text teaching, a well-studied instructional design, is the modern, gentler version of exactly that same demand. It doesn't just present the correct answer. It explicitly names the common wrong belief first, then dismantles it directly. That consistently produces stronger, longer-lasting correction than simply stating the right answer next to the wrong one and hoping the contrast does the work. The person being taught doesn't just receive information. They watch their own specific misconception get named and taken apart. That's a very different, much stickier kind of learning.</p>
+
+        <h2>Can AI become a good teacher?</h2>
+
+        <p>Here's a strange, telling fact. Long before anyone thought seriously about using AI to teach humans, AI labs were already using it to teach other AI. Microsoft's Orca trains smaller models not by copying a larger model's final answers, but by learning from its explanations, its actual reasoning traces, step by step, the way a student might learn more from watching how a problem gets solved than from just seeing the answer key. Curious? <a href="https://microsoft.com/en-us/research/publication/orca-progressive-learning-from-complex-explanation-traces-of-gpt-4" target="_blank" rel="noopener noreferrer">Read further here</a>.</p>
+
+        <p>A smaller model trained this way ends up meaningfully more capable than one that only imitated the bigger model's outputs, because it's absorbing something closer to the reasoning, not just the conclusion. If that already works machine to machine, the obvious next question is whether it transfers machine to human. This is worth saying plainly, since most of what AI does to learning in this series has been on the costly side of the ledger.</p>
+
+        <p>An AI tutor built to ask rather than tell is different from a chatbot that just answers. It can make a student explain their reasoning back, catch the specific gap in it, and push on exactly that gap. No single teacher managing thirty students at once can realistically do that for each of them individually. Patient, infinitely repeatable Socratic questioning, calibrated to one specific kid's specific misunderstanding, is a genuinely good use of the technology. It puts the effort back on the student, rather than removing it.</p>
+
+        <p>None of this is a new insight dressed up in new language, either. The oldest recorded teaching traditions in India, the dialogue structure of the Upanishads themselves, weren't lectures. The Kena Upanishad opens with the disciple firing a string of pointed "by whom" questions at the teacher, about the nature of mind and perception. The teacher answers by turning the question back, rather than simply supplying the fact. That's disputation as pedagogy, built centuries before anyone called it the Socratic method. It's structurally identical to what a well-designed AI tutor should be doing right now. Most of them don't. Most of them just answer and move on.</p>
+
+        <h2>The catch, and it's a real one</h2>
+
+        <p>Here's where this piece has to end on an honest note rather than a triumphant one. Everything above works beautifully right up until someone has an incentive to fake it. It turns out both students and AI systems have exactly that incentive, and both have found ways to exploit it. An explanation that sounds thorough, and a genuine understanding that produced it, are not automatically the same thing. The gap between them is a lot easier to hide than you'd hope.</p>
+
+        <p class="article-closing-line">That's next.</p>
+
+      </div><!-- .article-body -->
+    </article>
+
+    <section class="article-connect">
+      <a href="https://forms.gle/V29QqzJYd2vHhwAx5" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Subscribe for new articles</a>
+      <a href="https://forms.gle/NhGjhHxASAkQTpvb7" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">Send feedback</a>
+    </section>
+
+    <footer class="site-footer">
+      <p>© Paa Sankar <span id="year"></span></p>
+    </footer>
+
+  </div>
+  <script src="../assets/script.js"></script>
+</body>
+</html>
