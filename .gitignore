@@ -3,4 +3,6 @@ Screenshots/
 *.md
 !CLAUDE.md
 email-notifier/config.json
+email-notifier/subscriber_state.csv
+email-notifier/__pycache__/
 Musings Blog Subscribers.csv

@@ -2,11 +2,14 @@
 """
 notify.py — Musings new-article email notifier
 ================================================
-Sends a notification email to all subscribers in the CSV when a new
-article is published on Musings of an Indian.
+Sends a notification email to all *active* tracked subscribers when a
+new article is published on Musings of an Indian. Reads from the
+tracked subscriber state DB (see subscriber_state.py), not the raw
+form-export CSV directly — anyone marked do-not-send or bounced is
+skipped. Run sync_subscribers.py first if there are new signups not
+yet tracked.
 
 Credentials and settings are read from config.json in this folder.
-The subscriber CSV is expected one level up (repo root).
 
 Usage
 -----
@@ -23,7 +26,6 @@ same convention as the article's og:image. Override with --image <url>, or
 omit entirely with --no-image.
 """
 
-import csv
 import json
 import smtplib
 import argparse
@@ -31,6 +33,8 @@ import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
+
+from subscriber_state import load_state, active_subscribers
 
 CONFIG_PATH = Path(__file__).parent / "config.json"
 REPO_ROOT   = Path(__file__).parent.parent
@@ -41,15 +45,9 @@ def load_config():
         return json.load(f)
 
 
-def load_subscribers(csv_path):
-    subscribers = []
-    with open(csv_path, newline="", encoding="utf-8") as f:
-        for row in csv.DictReader(f):
-            name  = row.get("Name", "").strip()
-            email = row.get("Email", "").strip()
-            if email:
-                subscribers.append({"name": name, "email": email})
-    return subscribers
+def load_subscribers(state_path):
+    rows = load_state(state_path)
+    return [{"name": r["Name"], "email": r["Email"]} for r in active_subscribers(rows)]
 
 
 def build_message(cfg, recipient, article_title, article_url, article_subtitle, image_url=None):
@@ -168,18 +166,18 @@ def main():
         image_url = f"{args.url.rstrip('/')}/{slug}-Image.jpg"
 
     cfg = load_config()
-    csv_path = REPO_ROOT / cfg["subscribers_csv"]
+    state_path = REPO_ROOT / cfg["subscriber_state_csv"]
 
-    if not csv_path.exists():
-        print(f"ERROR: subscriber CSV not found at {csv_path}")
+    if not state_path.exists():
+        print(f"ERROR: no tracked subscribers at {state_path}. Run sync_subscribers.py first.")
         sys.exit(1)
 
-    subscribers = load_subscribers(csv_path)
+    subscribers = load_subscribers(state_path)
     if not subscribers:
-        print("No subscribers found in CSV.")
+        print("No active subscribers tracked.")
         sys.exit(1)
 
-    print(f"Subscribers: {len(subscribers)}")
+    print(f"Active subscribers: {len(subscribers)}")
     print(f"Hero image: {image_url if image_url else '(none)'}")
 
     if args.dry_run:

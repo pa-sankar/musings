@@ -107,40 +107,46 @@ Snippet goes in `<head>` of every HTML page:
 
 ## Email notifier
 
-Script: `email-notifier/notify.py`
-Config (gitignored): `email-notifier/config.json` — Gmail app password for paa.sankar.author@gmail.com
-Subscribers CSV (gitignored): `Musings Blog Subscribers.csv` — columns: Timestamp, Name, Email, Remarks
+**Windows console encoding:** the default console codepage (cp1252) can't print non-ASCII characters (arrows, em dashes, smart quotes). Run every script below with `PYTHONIOENCODING=utf-8` set, e.g. `PYTHONIOENCODING=utf-8 python email-notifier/notify.py ...`. Without it, a crash mid-loop (e.g. after the first `sendmail()` succeeds but before its `print()`) can silently skip the remaining recipients — always verify send counts.
+
+### Subscriber tracking (the actual source of truth)
+
+Sankar downloads a fresh export from the Google Form over `Musings Blog Subscribers.csv` (gitignored) whenever someone new subscribes — it's a raw snapshot, always overwritten wholesale, so it has no memory of who's already been welcomed or asked to stop. That memory lives in a separate, tracked state file instead:
+
+- **`email-notifier/subscriber_state.csv`** (gitignored — subscriber PII) — one row per subscriber: `Email, Name, SubscribedTimestamp, SignupContextTitle, SignupContextUrl, WelcomeSentDate, Status, Notes`. `Status` is `active` / `do-not-send` / `bounced`. **`notify.py` and `welcome.py` both read only from this file**, filtered to `Status == active` — never from the raw CSV directly.
+- **`email-notifier/sync_subscribers.py`** — run this first, every time the raw CSV is re-downloaded. Diffs it against the state file by email and appends anyone new (`Status=active`, empty `WelcomeSentDate`). Prints the new names so you know who still needs a welcome email.
+  ```bash
+  PYTHONIOENCODING=utf-8 python email-notifier/sync_subscribers.py --dry-run   # just report
+  PYTHONIOENCODING=utf-8 python email-notifier/sync_subscribers.py \
+    --current-article-title "..." --current-article-url "https://..."          # tag context + write
+  ```
+- **`email-notifier/manage_subscriber.py`** — change a subscriber's status (e.g. they asked to stop, or an address bounced), or list everyone with their status/welcome date.
+  ```bash
+  PYTHONIOENCODING=utf-8 python email-notifier/manage_subscriber.py --list
+  PYTHONIOENCODING=utf-8 python email-notifier/manage_subscriber.py --email x@y.com --status do-not-send --note "asked to unsubscribe 2026-09-24"
+  ```
+
+**Workflow whenever the CSV is re-downloaded:** run `sync_subscribers.py` → for each new name it prints, run `welcome.py` → for any unsubscribe/bounce, run `manage_subscriber.py`.
+
+### notify.py — new-article blast to all active subscribers
+
+Config (gitignored): `email-notifier/config.json` — Gmail app password for paa.sankar.author@gmail.com, plus `subscriber_state_csv` path.
 
 The email includes a clickable hero image, auto-derived from `--url` via the `{slug}-Image.jpg` convention (same as `og:image`). Override with `--image <url>`, or drop it with `--no-image` if the article has no hero image yet.
 
 ```bash
-# Dry run (preview recipients):
-python email-notifier/notify.py --dry-run --title "..." --url "..."
-
-# Send:
-python email-notifier/notify.py --title "..." --url "https://..." --subtitle "..."
+PYTHONIOENCODING=utf-8 python email-notifier/notify.py --dry-run --title "..." --url "..."
+PYTHONIOENCODING=utf-8 python email-notifier/notify.py --title "..." --url "https://..." --subtitle "..."
 ```
 
-**Windows console encoding:** the default console codepage (cp1252) can't print non-ASCII characters (arrows, em dashes, smart quotes). Run Python scripts with `PYTHONIOENCODING=utf-8` set, e.g.:
+### welcome.py — one subscriber at a time
+
+Looks a subscriber up by `--name` or `--email` in the state file, sends a branded welcome, records `WelcomeSentDate`. Links to the **homepage**, not the latest article — someone who just subscribed almost certainly already read whatever piece got them there; the welcome email's job is surfacing everything else.
 
 ```bash
-PYTHONIOENCODING=utf-8 python email-notifier/notify.py --title "..." --url "..."
-```
-
-Without it, a crash mid-loop (e.g. after the first `sendmail()` succeeds but before its `print()`) can silently skip the remaining recipients — always verify send counts against subscriber count.
-
-**New-subscriber welcome email:** `email-notifier/welcome.py` — sends a one-off welcome email to a single subscriber, looked up by `--name` or `--email` in the CSV. Same config/branding as `notify.py`. Optionally feature an article with `--highlight-title` / `--highlight-url` / `--highlight-subtitle` (e.g. point new subscribers at the start of the current series).
-
-```bash
-# Preview:
 PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --name "Jagan" --dry-run
-
-# Send:
-PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --name "Jagan" \
-  --highlight-title "..." --highlight-url "https://..." --highlight-subtitle "..."
+PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --email jagan.xbox@gmail.com
 ```
-
-Run this whenever a new row appears in `Musings Blog Subscribers.csv`.
 
 ---
 
