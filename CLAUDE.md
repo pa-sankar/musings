@@ -101,6 +101,7 @@ Snippet goes in `<head>` of every HTML page:
 | `ai-is-killing-the-curious-cat` | AI is killing the curious cat (series part 1 of 5) | Listed |
 | `a-solution-from-the-past-rediscovered` | A solution from the past, rediscovered (series part 2 of 5) | Listed |
 | `show-your-work-prove-you-meant-it` | Show your work, prove you meant it (series part 3 of 5) | Listed |
+| `the-peer-whos-too-polite` | The peer who's too polite, and the liar who's worse (series part 4 of 5) | Listed |
 | `segregation` | Isn't Segregation Illegal? | **Unlisted** — pending pledge form URL + homepage card |
 
 ---
@@ -153,4 +154,4 @@ PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --email jagan.xbox@gmail
 ## Pending items
 
 - `segregation/`: replace `PLEDGE_FORM_LINK_TBD` with actual Google Form URL, then add to homepage slider
-- AI curiosity series (`ai-curiosity-series/` hub): parts 4–5 still work in progress (drafts for parts 4, 5, and an extra unplanned "6-same-well-different-problem" exist in `learning-series/` as of 2026-09-23). Swap each "Coming soon" badge in the hub for a real link as each piece is finalized.
+- AI curiosity series (`ai-curiosity-series/` hub): part 5 still work in progress (drafts for part 5 and an extra unplanned "6-same-well-different-problem" exist in `learning-series/` as of 2026-09-23). Swap its "Coming soon" badge in the hub for a real link once finalized.

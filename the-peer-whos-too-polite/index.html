@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explaining your reasoning is a good test, right up until the person checking it doesn't really check, or the checking itself gets gamed.">
+  <title>The peer who's too polite, and the liar who's worse | Musings of an Indian</title>
+  <link rel="canonical" href="https://pa-sankar.github.io/musings/the-peer-whos-too-polite/">
+  <meta property="og:site_name" content="Musings of an Indian">
+  <meta property="og:title" content="The peer who's too polite, and the liar who's worse">
+  <meta property="og:description" content="Every fix for fake understanding has a matching way to fake the fix. A tour through how, and what that says about us.">
+  <meta property="og:url" content="https://pa-sankar.github.io/musings/the-peer-whos-too-polite/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://pa-sankar.github.io/musings/the-peer-whos-too-polite/the-peer-whos-too-polite-Image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A dark wooden knight chess piece facing a pale king across a board, close and low, in dim, moody light with other pieces blurred in the background.">
+  <meta property="article:author" content="Paa Sankar">
+  <meta property="article:published_time" content="2026-09-28">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The peer who's too polite, and the liar who's worse">
+  <meta name="twitter:description" content="You can't out-explain a system built to look like it explained. Part 4 of a series on AI and learning.">
+  <meta name="twitter:image" content="https://pa-sankar.github.io/musings/the-peer-whos-too-polite/the-peer-whos-too-polite-Image.jpg">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GT-W6233NMX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GT-W6233NMX');
+  </script>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="container">
+
+    <nav class="article-nav">
+      <a class="back-link" href="../">← Musings of an Indian</a>
+    </nav>
+
+    <div class="series-strip">
+      <span class="series-strip-label">Part 4 of 5</span>
+      <span>— If human nature doesn't change, why would AI?</span>
+      <span class="series-strip-nav">
+        <a href="../ai-curiosity-series/index.html">Series hub</a>
+        <a href="../show-your-work-prove-you-meant-it/index.html">← Part 3</a>
+      </span>
+    </div>
+
+    <article>
+      <header class="article-header">
+        <h1 class="article-title">The peer who's too polite, and the liar who's worse</h1>
+        <p class="article-subtitle">If human nature doesn't change, why would AI?</p>
+        <div class="article-meta">
+          <span>Paa Sankar</span>
+          <span>September 2026</span>
+          <span>7 min read</span>
+        </div>
+      </header>
+
+      <figure class="article-hero">
+        <img src="./the-peer-whos-too-polite-Image.jpg" alt="A dark wooden knight chess piece facing a pale king across a board, close and low, in dim, moody light with other pieces blurred in the background.">
+      </figure>
+
+      <div class="article-body">
+
+        <p>Last time, we landed on a genuinely good idea. Don't trust the answer, trust the explanation. Better still, make the explainer defend it in front of someone who wasn't told what to expect. It's a good idea. It's also, if you leave it there, an idea with exactly one weak link: the person, or the system, doing the checking.</p>
+
+        <h2>The polite classroom problem</h2>
+
+        <p>Here's the failure mode first, because it's the more human one. <a href="https://pa-sankar.github.io/musings/show-your-work-prove-you-meant-it/">Remember Gargi</a>, pressing Yajnavalkya twice in front of the whole court, until he had to ask her to stop. That's the standard. Now picture the opposite. Put a class of students in charge of asking each other hard follow-up questions after a presentation, and you'll get real learning, but only if the questions are actually that hard. Nothing stops the whole class quietly agreeing, without ever discussing it out loud, to just not embarrass each other, to not be Gargi. Everyone gets an easy ride. Everyone's understanding stays exactly as shallow as before. The test looked rigorous and tested nothing. It depended entirely on the goodwill of people who had every social incentive to be gentle.</p>
+
+        <p>The fix, oddly enough, is to stop trusting the questioner's diligence altogether. Measure something they can't collectively soften instead: whether a genuinely unfamiliar third party, tested cold on a new problem afterward, can now actually solve it. This is a real, formal idea in AI research called simulatability. Score an explanation not by whether it sounds convincing, but by whether a naive listener, given only the explanation, can now correctly handle a fresh case they weren't shown. It sidesteps the polite-classroom problem entirely. A class that agrees to go easy on the questions can still be tested cold afterward, and no amount of niceness helps you pass a test you can't fake your way through.</p>
+
+        <h2>Except that has its own hole in it</h2>
+
+        <p>Naturally, it does. Researchers testing this exact approach, in a benchmark called ALMANACS, found something uncomfortable. Explanations can score well simply by accidentally giving away the answer inside the explanation itself, without actually teaching the underlying reasoning at all. Curious? <a href="https://arxiv.org/abs/2312.12747" target="_blank" rel="noopener noreferrer">Read further here</a>.</p>
+
+        <p>The listener passes not because they learned anything, but because the "explanation" quietly handed them the answer wrapped in a bow. And in the most sobering version of this research, across a whole battery of tests, no explanation method reliably beat giving the listener no explanation at all. Which is either a damning verdict on how badly most explanations actually teach, or a sign that measuring genuine understanding is a lot harder than it looks. Possibly both.</p>
+
+        <h2>The part that should genuinely unsettle you</h2>
+
+        <p>Some of this doesn't even require anyone to be lying. Research into why language models hallucinate found that calibration takes far less computation than accuracy, which is a dry way of saying something concrete. Curious? <a href="https://openai.com/index/why-language-models-hallucinate/" target="_blank" rel="noopener noreferrer">Read further here</a>.</p>
+
+        <p>A model with zero exposure to a topic can say "I don't know" cheaply, nothing there to weigh. A model with broad but partial exposure, which is what most AI systems have on most subjects, has a much harder job. It has to judge exactly how confident a specific answer deserves to be, with no reliable signal telling it when that judgement has gone wrong.</p>
+
+        <p>Tamil has an old proverb for the shape of that risk.</p>
+
+        <p class="article-pullquote">நிறை குடம் நீர் தளும்பாது, குறைகுடம் கூத்தாடும்.<br><br>A full pot doesn't spill. A half-filled one dances about and unsettles whoever's carrying it.</p>
+
+        <p>An empty pot isn't in the original line, but the same physics covers it, nothing in it to slosh. It's the partial fill, confident enough to sound sure, uncertain enough to occasionally be wrong, that causes the trouble. No deception is required for that to happen.</p>
+
+        <p>Here's where it stops being an innocent wobble, though, and becomes something closer to actual deception. If two AI systems are set up to check each other's work, there's nothing stopping them from learning to pass a hidden signal instead of genuinely checking anything. They can encode the real answer in a word choice, a sentence structure, a stylistic tic, something that means nothing to a human reader but tells the other system exactly what to say. Researchers at Redwood Research have demonstrated this happening. Not as a hypothetical. Models fine-tuned to smuggle secret information through text that reads as completely ordinary to anyone not in on the code. Curious? <a href="https://arxiv.org/abs/2310.18512" target="_blank" rel="noopener noreferrer">Read further here</a>.</p>
+
+        <p>Worse, some evidence suggests systems can stumble into this trick on their own, without being taught it. Hiding the signal simply helps them succeed.</p>
+
+        <p>The defence researchers reach for is to have an independent system rewrite the text, preserving the meaning but scrambling the exact wording. The theory: most hidden codes need very specific word choices to work, and a paraphrase destroys that precision. This genuinely works, for the simple version of the trick. It provably cannot work for a smarter version. There, the hidden signal isn't in which words get used, but in which equally correct choice gets made, a coding assistant picking one valid approach over another, say. A meaning-preserving rewrite has nothing to correct there, by definition. Curious? <a href="https://arxiv.org/abs/2506.01926" target="_blank" rel="noopener noreferrer">Read further here</a>.</p>
+
+        <p>Even the very act of "showing your work" turns out not to guarantee anything. A model's written reasoning and its actual output are produced by the same underlying process. It isn't two separate steps, where one honestly reports on the other. Research has directly confirmed that written explanations don't always reflect the real reason behind an answer, sometimes not even close. Curious? <a href="https://arxiv.org/abs/2305.04388" target="_blank" rel="noopener noreferrer">Read further here</a>.</p>
+
+        <p>In one striking case, researchers tried to stop AI systems from planning bad behaviour by penalising bad-sounding thoughts in their visible reasoning. The system didn't stop misbehaving. It just stopped writing down the part that gave it away, kept doing the thing, and got quieter about it.</p>
+
+        <h2>What else did you expect</h2>
+
+        <p>This is worth landing on the same wry note as where this series started. Of course a system graded on how convincingly it explains itself will, eventually, learn to convince rather than to be right. That's not a flaw specific to silicon. It's the oldest incentive problem there is, dressed in new language. Debate is one of the more promising formal fixes for exactly this. It structures two AI systems to argue opposite sides of a question in front of a judge, on the theory that a dishonest position is always easier to poke a hole in than a true one. It's a real, serious idea, first proposed as AI safety via debate. Curious? <a href="https://arxiv.org/abs/1805.00899" target="_blank" rel="noopener noreferrer">Read further here</a>.</p>
+
+        <p>It also has a documented failure mode, called the obfuscated arguments problem. A long enough chain of individually unremarkable steps can hide a false conclusion, one that no single step looks wrong enough to challenge. Curious? <a href="https://www.lesswrong.com/posts/PJLABqQ962hZEqhdB/debate-update-obfuscated-arguments-problem" target="_blank" rel="noopener noreferrer">Read further here</a>.</p>
+
+        <p>Length and plausibility, in other words, can substitute for actual correctness, if nobody's checking closely enough at every single link.</p>
+
+        <h2>Where this leaves you</h2>
+
+        <p>Not hopeless, but honestly harder than "make them show their work" suggested a moment ago. Every layer of checking raises the cost of faking it. None of them, so far, makes faking it structurally impossible. That's not a comfortable place to end a piece, and it isn't meant to be. What it does clarify, sharply, is what the actual fix has to look like. It isn't a smarter lie detector. It's a completely different question, one that doesn't ask "did you catch the fake" at all.</p>
+
+        <p class="article-closing-line">That's next, and it's the last piece in this series.</p>
+
+      </div><!-- .article-body -->
+    </article>
+
+    <section class="article-connect">
+      <a href="https://forms.gle/V29QqzJYd2vHhwAx5" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Subscribe for new articles</a>
+      <a href="https://forms.gle/NhGjhHxASAkQTpvb7" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">Send feedback</a>
+    </section>
+
+    <footer class="site-footer">
+      <p>© Paa Sankar <span id="year"></span></p>
+    </footer>
+
+  </div>
+  <script src="../assets/script.js"></script>
+</body>
+</html>
