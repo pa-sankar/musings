@@ -2,20 +2,28 @@
 """
 welcome.py — Musings new-subscriber welcome email
 ====================================================
-Sends a one-off welcome email to a single new subscriber, looked up by
-name or email in the tracked subscriber state DB (see
-subscriber_state.py). Links to the homepage, not the latest article —
-if they just subscribed, they most likely already read whatever piece
-brought them here; the welcome email's job is pointing them at
-everything else they haven't seen yet.
+Default mode: no arguments needed. Finds every tracked subscriber
+who's active and hasn't been welcomed yet (empty WelcomeSentDate in
+subscriber_state.csv — see subscriber_state.py) and sends each one a
+welcome email individually. This is what you want after running
+sync_subscribers.py — it picks up exactly the new subscribers that
+call flagged, with no need to name them one by one.
 
-Run sync_subscribers.py first if the subscriber isn't tracked yet.
-On success, this records today's date in the subscriber's
-WelcomeSentDate so re-runs don't double-send by accident (it still
-will if asked — no hard block — but warns).
+Links to the homepage, not the latest article — if they just
+subscribed, they most likely already read whatever piece brought them
+here; the welcome email's job is pointing them at everything else they
+haven't seen yet.
+
+On each successful send, records today's date in that subscriber's
+WelcomeSentDate, so a re-run only catches whoever's still unwelcomed.
 
 Usage
 -----
+  # Send to everyone not yet welcomed:
+  python welcome.py --dry-run
+  python welcome.py
+
+  # Target just one subscriber (e.g. a deliberate re-send):
   python welcome.py --name Jagan --dry-run
   python welcome.py --email jagan.xbox@gmail.com
 """
@@ -115,16 +123,18 @@ To unsubscribe, reply to this email.
     return msg
 
 
+def send_one(cfg, server, recipient):
+    msg = build_message(cfg, recipient)
+    server.sendmail(cfg["sender_email"], recipient["Email"], msg.as_string())
+    recipient["WelcomeSentDate"] = date.today().isoformat()
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Send a welcome email to one tracked Musings subscriber.")
-    parser.add_argument("--name",  default=None, help="Subscriber name, as tracked")
-    parser.add_argument("--email", default=None, help="Subscriber email, as tracked")
+    parser = argparse.ArgumentParser(description="Send welcome emails to tracked Musings subscribers.")
+    parser.add_argument("--name",  default=None, help="Target just this subscriber, by name (as tracked)")
+    parser.add_argument("--email", default=None, help="Target just this subscriber, by email (as tracked)")
     parser.add_argument("--dry-run", action="store_true", help="Preview without sending")
     args = parser.parse_args()
-
-    if not args.name and not args.email:
-        print("ERROR: pass --name or --email to identify the subscriber.")
-        sys.exit(1)
 
     cfg = load_config()
     state_path = REPO_ROOT / cfg["subscriber_state_csv"]
@@ -134,38 +144,51 @@ def main():
         print(f"ERROR: no tracked subscribers at {state_path}. Run sync_subscribers.py first.")
         sys.exit(1)
 
-    recipient = find_row(rows, email=args.email, name=args.name)
-    if not recipient:
-        print(f"ERROR: no tracked subscriber matching name={args.name!r} email={args.email!r}. Run sync_subscribers.py if they're new.")
-        sys.exit(1)
+    if args.name or args.email:
+        # Single-subscriber mode: explicit target, sends even if already welcomed.
+        recipient = find_row(rows, email=args.email, name=args.name)
+        if not recipient:
+            print(f"ERROR: no tracked subscriber matching name={args.name!r} email={args.email!r}. Run sync_subscribers.py if they're new.")
+            sys.exit(1)
+        if not recipient["Email"]:
+            print(f"ERROR: subscriber {recipient['Name']!r} has no email address tracked.")
+            sys.exit(1)
+        if recipient["Status"] != "active":
+            print(f"ERROR: {recipient['Name']} <{recipient['Email']}> is marked '{recipient['Status']}', not active. Not sending.")
+            sys.exit(1)
+        if recipient["WelcomeSentDate"]:
+            print(f"NOTE: welcome already sent to {recipient['Email']} on {recipient['WelcomeSentDate']}. Re-sending anyway.")
+        targets = [recipient]
+    else:
+        # Default mode: everyone active and not yet welcomed.
+        targets = [r for r in rows if r["Status"] == "active" and not r["WelcomeSentDate"] and r["Email"]]
+        if not targets:
+            print("No unwelcomed active subscribers. Nothing to send.")
+            return
 
-    if not recipient["Email"]:
-        print(f"ERROR: subscriber {recipient['Name']!r} has no email address tracked.")
-        sys.exit(1)
-
-    if recipient["Status"] != "active":
-        print(f"ERROR: {recipient['Name']} <{recipient['Email']}> is marked '{recipient['Status']}', not active. Not sending.")
-        sys.exit(1)
-
-    if recipient["WelcomeSentDate"]:
-        print(f"NOTE: welcome already sent to {recipient['Email']} on {recipient['WelcomeSentDate']}. Re-sending anyway.")
-
-    print(f"Recipient: {recipient['Name']} <{recipient['Email']}>")
+    print(f"Recipients ({len(targets)}):")
+    for r in targets:
+        print(f"  {r['Name']} <{r['Email']}>")
 
     if args.dry_run:
-        print("Dry run — no email sent.")
+        print("Dry run — no emails sent.")
         return
 
-    msg = build_message(cfg, recipient)
-
+    sent = failed = 0
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(cfg["sender_email"], cfg["app_password"])
-        server.sendmail(cfg["sender_email"], recipient["Email"], msg.as_string())
+        for recipient in targets:
+            try:
+                send_one(cfg, server, recipient)
+                print(f"  Sent  -> {recipient['Name']} <{recipient['Email']}>")
+                sent += 1
+            except Exception as e:
+                print(f"  FAIL  -> {recipient['Email']}: {e}")
+                failed += 1
+            finally:
+                save_state(state_path, rows)  # persist after every attempt, not just at the end
 
-    recipient["WelcomeSentDate"] = date.today().isoformat()
-    save_state(state_path, rows)
-
-    print(f"Sent -> {recipient['Name']} <{recipient['Email']}> (WelcomeSentDate recorded)")
+    print(f"\nDone. {sent} sent, {failed} failed.")
 
 
 if __name__ == "__main__":

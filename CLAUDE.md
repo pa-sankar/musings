@@ -127,7 +127,7 @@ Sankar downloads a fresh export from the Google Form over `Musings Blog Subscrib
   PYTHONIOENCODING=utf-8 python email-notifier/manage_subscriber.py --email x@y.com --status do-not-send --note "asked to unsubscribe 2026-09-24"
   ```
 
-**Workflow whenever the CSV is re-downloaded:** run `sync_subscribers.py` → for each new name it prints, run `welcome.py` → for any unsubscribe/bounce, run `manage_subscriber.py`.
+**Workflow whenever the CSV is re-downloaded:** run `sync_subscribers.py` → run `welcome.py` with no arguments (it auto-sends to everyone active and not yet welcomed) → for any unsubscribe/bounce, run `manage_subscriber.py`.
 
 ### notify.py — new-article blast to all active subscribers
 
@@ -140,9 +140,16 @@ PYTHONIOENCODING=utf-8 python email-notifier/notify.py --dry-run --title "..." -
 PYTHONIOENCODING=utf-8 python email-notifier/notify.py --title "..." --url "https://..." --subtitle "..."
 ```
 
-### welcome.py — one subscriber at a time
+### welcome.py — auto-sends to everyone not yet welcomed
 
-Looks a subscriber up by `--name` or `--email` in the state file, sends a branded welcome, records `WelcomeSentDate`. Links to the **homepage**, not the latest article — someone who just subscribed almost certainly already read whatever piece got them there; the welcome email's job is surfacing everything else.
+No arguments needed for the normal case: finds every tracked subscriber who's `active` with an empty `WelcomeSentDate` and sends each one individually, recording the date as it goes (persisted after every attempt, not just at the end — safe to interrupt). Links to the **homepage**, not the latest article — someone who just subscribed almost certainly already read whatever piece got them there; the welcome email's job is surfacing everything else.
+
+```bash
+PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --dry-run   # preview who'd get one
+PYTHONIOENCODING=utf-8 python email-notifier/welcome.py             # send to all unwelcomed
+```
+
+Pass `--name` or `--email` to target just one subscriber instead (e.g. a deliberate re-send) — this sends even if they already have a `WelcomeSentDate`.
 
 ```bash
 PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --name "Jagan" --dry-run
