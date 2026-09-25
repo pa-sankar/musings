@@ -161,4 +161,4 @@ PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --email jagan.xbox@gmail
 ## Pending items
 
 - `segregation/`: replace `PLEDGE_FORM_LINK_TBD` with actual Google Form URL, then add to homepage slider
-- AI curiosity series (`ai-curiosity-series/` hub): part 5 still work in progress (drafts for part 5 and an extra unplanned "6-same-well-different-problem" exist in `learning-series/` as of 2026-09-23). Swap its "Coming soon" badge in the hub for a real link once finalized.
+- AI curiosity series (`ai-curiosity-series/` hub): part 5 and the bonus "6-same-well-different-problem" piece (drafts exist in `learning-series/` as of 2026-09-23) are still work in progress. **Plan: publish part 5 and the bonus piece 6 together, in the same pass**, not separately. Swap their "Coming soon" badges in the hub for real links once finalized.
