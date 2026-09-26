@@ -102,6 +102,8 @@ Snippet goes in `<head>` of every HTML page:
 | `a-solution-from-the-past-rediscovered` | A solution from the past, rediscovered (series part 2 of 5) | Listed |
 | `show-your-work-prove-you-meant-it` | Show your work, prove you meant it (series part 3 of 5) | Listed |
 | `the-peer-whos-too-polite` | The peer who's too polite, and the liar who's worse (series part 4 of 5) | Listed |
+| `grade-the-room-not-the-gap` | Grade the room, not the gap you planted (series part 5 of 5) | Listed |
+| `same-well-different-problem` | Same well, different problem (series bonus piece) | Listed |
 | `segregation` | Isn't Segregation Illegal? | **Unlisted** — pending pledge form URL + homepage card |
 
 ---
@@ -161,4 +163,4 @@ PYTHONIOENCODING=utf-8 python email-notifier/welcome.py --email jagan.xbox@gmail
 ## Pending items
 
 - `segregation/`: replace `PLEDGE_FORM_LINK_TBD` with actual Google Form URL, then add to homepage slider
-- AI curiosity series (`ai-curiosity-series/` hub): part 5 and the bonus "6-same-well-different-problem" piece (drafts exist in `learning-series/` as of 2026-09-23) are still work in progress. **Plan: publish part 5 and the bonus piece 6 together, in the same pass**, not separately. Swap their "Coming soon" badges in the hub for real links once finalized.
+- AI curiosity series: complete. All 5 parts plus the bonus piece are published and listed. Hub has no more "Coming soon" badges.
