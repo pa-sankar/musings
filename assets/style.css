@@ -798,6 +798,48 @@ hr {
 }
 
 /* ========================================================
+   Leaving-site confirm modal (article body external links)
+   ======================================================== */
+
+.leaving-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 42, 38, 0.55);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.leaving-modal.is-open { display: flex; }
+
+.leaving-modal-box {
+  background: #faf8f4;
+  border: 1px solid #d8cfc6;
+  border-radius: 4px;
+  max-width: 420px;
+  width: 100%;
+  padding: 1.75rem;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.leaving-modal-text {
+  font-size: 0.95rem;
+  color: #2d2a26;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.leaving-modal-host { color: #8b6f47; font-weight: bold; }
+
+.leaving-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+/* ========================================================
    Responsive
    ======================================================== */
 
@@ -854,4 +896,7 @@ hr {
   .series-strip { flex-direction: column; align-items: flex-start; }
   .series-strip-nav { margin-left: 0; }
   .hub-item { flex-direction: column; gap: 0.3rem; }
+
+  .leaving-modal-actions { flex-direction: column-reverse; }
+  .leaving-modal-actions .btn { width: 100%; text-align: center; }
 }

@@ -4,6 +4,84 @@ document.addEventListener('DOMContentLoaded', function () {
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* ── External link click tracking (homepage cards) ────── */
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[data-track="external"]');
+    if (!link || typeof gtag !== 'function') return;
+    gtag('event', 'external_link_click', {
+      link_url:  link.getAttribute('href'),
+      link_text: link.getAttribute('data-title')
+    });
+  });
+
+  /* ── "You're leaving" confirm + tracking (in-article links) ──
+     Applies to every external "Curious? Read further here" link
+     inside .article-body, on every article page, with no per-page
+     markup needed — it targets target="_blank" links generically. */
+  (function () {
+    var modal = null;
+
+    function buildModal() {
+      modal = document.createElement('div');
+      modal.className = 'leaving-modal';
+      modal.innerHTML =
+        '<div class="leaving-modal-box" role="dialog" aria-modal="true" aria-label="Leaving this site">' +
+          '<p class="leaving-modal-text">You\'re about to leave <strong>Musings of an Indian</strong> for <span class="leaving-modal-host"></span>.</p>' +
+          '<div class="leaving-modal-actions">' +
+            '<button type="button" class="btn btn--secondary leaving-modal-cancel">Stay here</button>' +
+            '<a href="#" target="_blank" rel="noopener noreferrer" class="btn btn--primary leaving-modal-continue">Continue</a>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(modal);
+
+      modal.querySelector('.leaving-modal-cancel').addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeModal();
+      });
+    }
+
+    function closeModal() {
+      if (modal) modal.classList.remove('is-open');
+    }
+
+    function openModal(link) {
+      if (!modal) buildModal();
+
+      var url = link.getAttribute('href');
+      var host = 'an external site';
+      try { host = new URL(url, window.location.href).hostname.replace(/^www\./, ''); } catch (err) {}
+
+      modal.querySelector('.leaving-modal-host').textContent = host;
+
+      var continueBtn = modal.querySelector('.leaving-modal-continue');
+      continueBtn.setAttribute('href', url);
+      continueBtn.onclick = function () {
+        if (typeof gtag === 'function') {
+          gtag('event', 'external_link_click', {
+            link_url:      url,
+            link_text:     (link.textContent || '').trim(),
+            link_location: 'article_body'
+          });
+        }
+        closeModal();
+      };
+
+      modal.classList.add('is-open');
+    }
+
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('.article-body a[target="_blank"]');
+      if (!link) return;
+      /* Let ctrl/cmd/middle/shift-click behave normally (open in background tab etc.) */
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      openModal(link);
+    });
+  })();
+
   /* ── Article slider (homepage only) ───────────────────── */
   var viewport  = document.getElementById('sliderViewport');
   var track     = document.getElementById('sliderTrack');
@@ -70,13 +148,4 @@ document.addEventListener('DOMContentLoaded', function () {
   setHeight();
   slideTo(0);
 
-  /* ── External link click tracking ─────────────────────── */
-  document.addEventListener('click', function (e) {
-    var link = e.target.closest('a[data-track="external"]');
-    if (!link || typeof gtag !== 'function') return;
-    gtag('event', 'external_link_click', {
-      link_url:  link.getAttribute('href'),
-      link_text: link.getAttribute('data-title')
-    });
-  });
 });
