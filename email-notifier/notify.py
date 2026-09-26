@@ -24,6 +24,15 @@ Usage
 The hero image ({slug}-Image.jpg) is included automatically, following the
 same convention as the article's og:image. Override with --image <url>, or
 omit entirely with --no-image.
+
+For a double-drop (two pieces published together), add --bonus-title and
+--bonus-url (and optionally --bonus-subtitle) to mention a second piece
+below the main one, in the same email:
+
+  python notify.py --title "Grade the room, not the gap you planted" \\
+                   --url "https://pa-sankar.github.io/musings/grade-the-room-not-the-gap/" \\
+                   --bonus-title "Same well, different problem" \\
+                   --bonus-url "https://pa-sankar.github.io/musings/same-well-different-problem/"
 """
 
 import json
@@ -50,7 +59,8 @@ def load_subscribers(state_path):
     return [{"name": r["Name"], "email": r["Email"]} for r in active_subscribers(rows)]
 
 
-def build_message(cfg, recipient, article_title, article_url, article_subtitle, image_url=None):
+def build_message(cfg, recipient, article_title, article_url, article_subtitle, image_url=None,
+                   bonus_title=None, bonus_url=None, bonus_subtitle=None):
     sender_email = cfg["sender_email"]
     sender_name  = cfg["sender_name"]
     blog_name    = cfg["blog_name"]
@@ -77,6 +87,42 @@ def build_message(cfg, recipient, article_title, article_url, article_subtitle, 
         if article_subtitle else ""
     )
 
+    bonus_plain = (
+        f"\nAnd a surprise bonus piece as well:\n\n{bonus_title}\n"
+        f"{f'{bonus_subtitle}' + chr(10) if bonus_subtitle else ''}"
+        f"Read it here: {bonus_url}\n"
+        if bonus_title and bonus_url else ""
+    )
+    bonus_subtitle_html = (
+        f"<p style='font-size:1rem;font-style:italic;color:#6b6560;margin:0 0 1rem;line-height:1.5;'>{bonus_subtitle}</p>"
+        if bonus_subtitle else ""
+    )
+    bonus_html = (
+        f"""
+    <hr style="border:none;border-top:1px solid #e5e0da;margin:2rem 0;">
+
+    <p style="font-size:1rem;color:#4a4540;margin:0 0 1.5rem 0;line-height:1.7;">
+      And a surprise bonus piece as well:
+    </p>
+
+    <div style="border-left:3px solid #7da86a;padding:0 0 0 1.25rem;margin:0 0 1.5rem 0;">
+      <h2 style="font-size:1.2rem;font-weight:normal;line-height:1.3;color:#2d2a26;margin:0 0 0.5rem 0;">
+        {bonus_title}
+      </h2>
+      {bonus_subtitle_html}
+    </div>
+
+    <p style="margin:0 0 2.5rem 0;">
+      <a href="{bonus_url}"
+         style="display:inline-block;padding:0.6rem 1.4rem;background-color:#5b6e3a;color:#ffffff;
+                text-decoration:none;font-size:0.9rem;border-radius:2px;font-family:Georgia,serif;">
+        Read the bonus piece
+      </a>
+    </p>
+"""
+        if bonus_title and bonus_url else ""
+    )
+
     plain = f"""Hi {greeting_name},
 
 A new article has just been published on {blog_name}.
@@ -84,7 +130,7 @@ A new article has just been published on {blog_name}.
 {article_title}
 {subtitle_line_plain}
 Read it here: {article_url}
-
+{bonus_plain}
 ---
 You're receiving this because you subscribed at {blog_url}
 To unsubscribe, reply to this email.
@@ -127,6 +173,8 @@ To unsubscribe, reply to this email.
       </a>
     </p>
 
+    {bonus_html}
+
     <hr style="border:none;border-top:1px solid #e5e0da;margin:2rem 0;">
 
     <p style="font-size:0.78rem;color:#9b9490;margin:0;line-height:1.65;">
@@ -154,6 +202,9 @@ def main():
                               "{slug}-Image.jpg convention derived from --url. "
                               "Pass --no-image to omit the image entirely.")
     parser.add_argument("--no-image", action="store_true", help="Send without a hero image")
+    parser.add_argument("--bonus-title",    default=None, help="Optional second piece to mention (double-drop)")
+    parser.add_argument("--bonus-url",      default=None, help="URL of the bonus piece")
+    parser.add_argument("--bonus-subtitle", default="",   help="Subtitle of the bonus piece")
     parser.add_argument("--dry-run",  action="store_true", help="List recipients without sending")
     args = parser.parse_args()
 
@@ -192,7 +243,8 @@ def main():
         server.login(cfg["sender_email"], cfg["app_password"])
         for sub in subscribers:
             try:
-                msg = build_message(cfg, sub, args.title, args.url, args.subtitle, image_url)
+                msg = build_message(cfg, sub, args.title, args.url, args.subtitle, image_url,
+                                     args.bonus_title, args.bonus_url, args.bonus_subtitle)
                 server.sendmail(cfg["sender_email"], sub["email"], msg.as_string())
                 print(f"  Sent  -> {sub['name']} <{sub['email']}>")
                 sent += 1

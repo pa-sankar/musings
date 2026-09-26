@@ -142,6 +142,13 @@ PYTHONIOENCODING=utf-8 python email-notifier/notify.py --dry-run --title "..." -
 PYTHONIOENCODING=utf-8 python email-notifier/notify.py --title "..." --url "https://..." --subtitle "..."
 ```
 
+**Double-drop (two pieces published together):** add `--bonus-title` / `--bonus-url` / `--bonus-subtitle` to mention a second piece in the same email, below the main one (used for part 5 + the bonus piece, 2026-09-26). The WhatsApp post for a double-drop still carries only the main piece's URL, with a one-line tease for the second — never two links in one WhatsApp message.
+
+```bash
+PYTHONIOENCODING=utf-8 python email-notifier/notify.py --title "..." --url "https://..." \
+  --bonus-title "..." --bonus-url "https://..." --bonus-subtitle "..."
+```
+
 ### welcome.py — auto-sends to everyone not yet welcomed
 
 No arguments needed for the normal case: finds every tracked subscriber who's `active` with an empty `WelcomeSentDate` and sends each one individually, recording the date as it goes (persisted after every attempt, not just at the end — safe to interrupt). Links to the **homepage**, not the latest article — someone who just subscribed almost certainly already read whatever piece got them there; the welcome email's job is surfacing everything else.
